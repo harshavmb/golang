@@ -2,14 +2,19 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 )
 
-var i int = 42
+func index_handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Whoa, Go is neat!")
+}
+
+func about_handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "About go!")
+}
 
 func main() {
-	var k int = 3
-	i := 3
-	fmt.Println(i)
-	fmt.Println("Hello World!")
-	fmt.Printf("%v, %T", k, k)
+	http.HandleFunc("/", index_handler)
+	http.HandleFunc("/about/", about_handler)
+	http.ListenAndServe(":8000", nil)
 }
